@@ -1,11 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Generate an Electron App'
+author: Em Lazer-Walker
+description: 'Generates native app versions of your Twine game or other HTML project'
 inputs:
-  milliseconds: # change this
+  app-name:
+    description: The name of your app, used in the executable name and in the window title
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    default: 'My App'
 runs:
   using: 'node12'
   main: 'dist/index.js'
