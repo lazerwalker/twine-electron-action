@@ -112,6 +112,8 @@ function run() {
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
             // eslint-disable-next-line no-console
             console.log('Attemping to find npm path!');
+            yield exec_1.exec('ls');
+            yield exec_1.exec('pwd');
             yield exec_1.exec('cd electron-wrapper && npm install');
             if (process.env.GITHUB_WORKSPACE) {
                 yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/src`, 'electron-wrapper/src/');

@@ -23,6 +23,8 @@ async function run(): Promise<void> {
     // eslint-disable-next-line no-console
     console.log('Attemping to find npm path!')
 
+    await exec('ls')
+    await exec('pwd')
     await exec('cd electron-wrapper && npm install')
 
     if (process.env.GITHUB_WORKSPACE) {
