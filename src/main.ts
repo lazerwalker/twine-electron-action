@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as core from '@actions/core'
 import {exec} from '@actions/exec'
 import {mv, which} from '@actions/io'
@@ -21,19 +20,15 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
+    // eslint-disable-next-line no-console
     console.log('Attemping to find npm path!')
-    const path = await which('npm', true)
 
-    console.log('Found path!', path)
-    await exec(path, ['install'])
+    await exec('npm', ['install'], {cwd: 'electron-wrapper'})
 
     if (process.env.GITHUB_WORKSPACE) {
-      await mv(
-        `${process.env.GITHUB_WORKSPACE}/src/*`,
-        './electron-wrapper/src'
-      )
-      await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, './electron-wrapper')
-      await exec('npm', ['run', 'build-icons'], {cwd: './electron-wrapper'})
+      await mv(`${process.env.GITHUB_WORKSPACE}/src`, 'electron-wrapper/src/')
+      await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, 'electron-wrapper')
+      await exec('npm', ['run', 'build-icons'], {cwd: 'electron-wrapper'})
     }
     // - name: Add MacOS certs
     //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
