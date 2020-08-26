@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {exec} from '@actions/exec'
+import exec from '@actions/exec'
 import {mv} from '@actions/io'
 
 async function run(): Promise<void> {
@@ -20,7 +20,7 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    await exec('npm', ['install']) //, {cwd: './electron-wrapper'})
+    await exec.exec('npm install')
 
     if (process.env.GITHUB_WORKSPACE) {
       await mv(
@@ -28,7 +28,7 @@ async function run(): Promise<void> {
         './electron-wrapper/src'
       )
       await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, './electron-wrapper')
-      await exec('npm', ['run', 'build-icons'], {cwd: './electron-wrapper'})
+      await exec.exec('npm', ['run', 'build-icons'], {cwd: './electron-wrapper'})
     }
     // - name: Add MacOS certs
     //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
