@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import * as core from '@actions/core'
 import {exec} from '@actions/exec'
-import {mv} from '@actions/io'
+import {mv, which} from '@actions/io'
 
 async function run(): Promise<void> {
   try {
@@ -25,7 +26,9 @@ async function run(): Promise<void> {
 
     await exec('ls')
     await exec(`ls ${process.env.HOME}`)
-    await exec('cd .. && ls')
+    await exec(`ls ${process.env.HOME}/work`)
+    await exec(`ls ${process.env.HOME}/work/twine-electron-test`)
+    console.log(await which('git'))
     await exec('pwd')
     await exec('cd electron-wrapper && npm install')
 
