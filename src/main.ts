@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import exec from '@actions/exec'
-import {mv} from '@actions/io'
+import {exec} from '@actions/exec'
+import {mv, which} from '@actions/io'
 
 async function run(): Promise<void> {
   try {
@@ -20,7 +20,11 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    await exec.exec('npm install')
+    // eslint-disable-next-line no-console
+    console.log('Attemping to find npm path!')
+    const path = await which('npm', true)
+
+    await exec(path, ['install'], {cwd: './electron-wrapper'})
 
     if (process.env.GITHUB_WORKSPACE) {
       await mv(
