@@ -23,12 +23,12 @@ async function run(): Promise<void> {
     // eslint-disable-next-line no-console
     console.log('Attemping to find npm path!')
 
-    await exec('npm', ['install'], {cwd: 'electron-wrapper'})
+    await exec('cd electron-wrapper && npm install')
 
     if (process.env.GITHUB_WORKSPACE) {
       await mv(`${process.env.GITHUB_WORKSPACE}/src`, 'electron-wrapper/src/')
       await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, 'electron-wrapper')
-      await exec('npm', ['run', 'build-icons'], {cwd: 'electron-wrapper'})
+      await exec('cd electron-wrapper && npm run build-icons')
     }
     // - name: Add MacOS certs
     //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
