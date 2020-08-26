@@ -90,6 +90,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-console */
 const core = __importStar(__webpack_require__(186));
 const exec_1 = __webpack_require__(514);
 const io_1 = __webpack_require__(436);
@@ -110,10 +111,10 @@ function run() {
             //     CERTIFICATE_OSX_APPLICATION: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
             //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
-            // eslint-disable-next-line no-console
             console.log('Attemping to find npm path!');
             const path = yield io_1.which('npm', true);
-            yield exec_1.exec(path, ['install'], { cwd: './electron-wrapper' });
+            console.log('Found path!', path);
+            yield exec_1.exec(path, ['install']);
             if (process.env.GITHUB_WORKSPACE) {
                 yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/src/*`, './electron-wrapper/src');
                 yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, './electron-wrapper');

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as core from '@actions/core'
 import {exec} from '@actions/exec'
 import {mv, which} from '@actions/io'
@@ -20,11 +21,11 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    // eslint-disable-next-line no-console
     console.log('Attemping to find npm path!')
     const path = await which('npm', true)
 
-    await exec(path, ['install'], {cwd: './electron-wrapper'})
+    console.log('Found path!', path)
+    await exec(path, ['install'])
 
     if (process.env.GITHUB_WORKSPACE) {
       await mv(
