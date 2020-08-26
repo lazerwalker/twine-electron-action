@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import {exec} from '@actions/exec'
-import {mv, which} from '@actions/io'
+import {mv} from '@actions/io'
 
 async function run(): Promise<void> {
   try {
