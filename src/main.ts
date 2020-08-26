@@ -24,6 +24,8 @@ async function run(): Promise<void> {
     console.log('Attemping to find npm path!')
 
     await exec('ls')
+    await exec(`ls ${process.env.HOME}`)
+    await exec('cd .. && ls')
     await exec('pwd')
     await exec('cd electron-wrapper && npm install')
 

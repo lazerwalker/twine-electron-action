@@ -113,6 +113,8 @@ function run() {
             // eslint-disable-next-line no-console
             console.log('Attemping to find npm path!');
             yield exec_1.exec('ls');
+            yield exec_1.exec(`ls ${process.env.HOME}`);
+            yield exec_1.exec('cd .. && ls');
             yield exec_1.exec('pwd');
             yield exec_1.exec('cd electron-wrapper && npm install');
             if (process.env.GITHUB_WORKSPACE) {
