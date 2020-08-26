@@ -20,7 +20,7 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    await exec('npm', ['install'], {cwd: './electron-wrapper'})
+    await exec('npm', ['install']) //, {cwd: './electron-wrapper'})
 
     if (process.env.GITHUB_WORKSPACE) {
       await mv(
