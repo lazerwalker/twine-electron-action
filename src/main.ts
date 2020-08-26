@@ -21,7 +21,6 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    // eslint-disable-next-line no-console
     console.log('Attemping to find npm path!')
 
     await exec('ls')

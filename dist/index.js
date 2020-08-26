@@ -90,6 +90,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-console */
 const core = __importStar(__webpack_require__(186));
 const exec_1 = __webpack_require__(514);
 const io_1 = __webpack_require__(436);
@@ -110,11 +111,12 @@ function run() {
             //     CERTIFICATE_OSX_APPLICATION: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
             //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
-            // eslint-disable-next-line no-console
             console.log('Attemping to find npm path!');
             yield exec_1.exec('ls');
             yield exec_1.exec(`ls ${process.env.HOME}`);
-            yield exec_1.exec('cd .. && ls');
+            yield exec_1.exec(`ls ${process.env.HOME}/work`);
+            yield exec_1.exec(`ls ${process.env.HOME}/work/twine-electron-test`);
+            console.log(yield io_1.which('git'));
             yield exec_1.exec('pwd');
             yield exec_1.exec('cd electron-wrapper && npm install');
             if (process.env.GITHUB_WORKSPACE) {
