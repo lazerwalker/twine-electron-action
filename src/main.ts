@@ -21,25 +21,18 @@ async function run(): Promise<void> {
     //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    console.log('Attemping to find npm path!')
+    // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
+    const wrapperDir = `${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`
 
-    await exec('ls')
-    await exec(`ls ${process.env.HOME}`)
-    await exec(`ls ${process.env.HOME}/work`)
-    await exec(`ls ${process.env.HOME}/work/_actions`)
-    await exec(`ls ${process.env.HOME}/work/_actions/lazerwalker`)
-    await exec(
-      `ls ${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action`
-    )
+    await exec(`ls ${wrapperDir}`)
 
     console.log(await which('git'))
-    await exec('pwd')
-    await exec('cd electron-wrapper && npm install')
+    await exec('npm', ['install'], {cwd: wrapperDir})
 
     if (process.env.GITHUB_WORKSPACE) {
-      await mv(`${process.env.GITHUB_WORKSPACE}/src`, 'electron-wrapper/src/')
-      await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, 'electron-wrapper')
-      await exec('cd electron-wrapper && npm run build-icons')
+      await mv(`${process.env.GITHUB_WORKSPACE}/src`, `${wrapperDir}/src/`)
+      await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, wrapperDir)
+      await exec('npm', ['run', 'build-icons'], {cwd: wrapperDir})
     }
     // - name: Add MacOS certs
     //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
@@ -65,7 +58,7 @@ async function run(): Promise<void> {
     //     fileName: 'win-certificate.pfx'
     //     encodedString: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    await exec('npm', ['run', 'make'], {cwd: './electron-wrapper'})
+    await exec('npm', ['run', 'make'], {cwd: wrapperDir})
     // TODO: make sure the right stuff is in ENV
     // 1. How to thread through APP_NAME
     // 2. Deal with codesigning stuff later

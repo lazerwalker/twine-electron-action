@@ -111,20 +111,15 @@ function run() {
             //     CERTIFICATE_OSX_APPLICATION: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
             //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
-            console.log('Attemping to find npm path!');
-            yield exec_1.exec('ls');
-            yield exec_1.exec(`ls ${process.env.HOME}`);
-            yield exec_1.exec(`ls ${process.env.HOME}/work`);
-            yield exec_1.exec(`ls ${process.env.HOME}/work/_actions`);
-            yield exec_1.exec(`ls ${process.env.HOME}/work/_actions/lazerwalker`);
-            yield exec_1.exec(`ls ${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action`);
+            // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
+            const wrapperDir = `${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`;
+            yield exec_1.exec(`ls ${wrapperDir}`);
             console.log(yield io_1.which('git'));
-            yield exec_1.exec('pwd');
-            yield exec_1.exec('cd electron-wrapper && npm install');
+            yield exec_1.exec('npm', ['install'], { cwd: wrapperDir });
             if (process.env.GITHUB_WORKSPACE) {
-                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/src`, 'electron-wrapper/src/');
-                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, 'electron-wrapper');
-                yield exec_1.exec('cd electron-wrapper && npm run build-icons');
+                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/src`, `${wrapperDir}/src/`);
+                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, wrapperDir);
+                yield exec_1.exec('npm', ['run', 'build-icons'], { cwd: wrapperDir });
             }
             // - name: Add MacOS certs
             //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
@@ -148,7 +143,7 @@ function run() {
             //   with:
             //     fileName: 'win-certificate.pfx'
             //     encodedString: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
-            yield exec_1.exec('npm', ['run', 'make'], { cwd: './electron-wrapper' });
+            yield exec_1.exec('npm', ['run', 'make'], { cwd: wrapperDir });
             // TODO: make sure the right stuff is in ENV
             // 1. How to thread through APP_NAME
             // 2. Deal with codesigning stuff later
