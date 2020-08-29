@@ -27,7 +27,7 @@ async function run(): Promise<void> {
       process.env.HOME || process.env.HOME_PATH
     }/work/_actions/lazerwalker/twine-electron-action/v2-alpha`
 
-    await exec(`ls ${process.env.HOME_PATH}`)
+    await exec(`ls ${process.env.HOME_PATH || process.env.HOME}`)
     await exec(`ls ${wrapperDir}`)
 
     console.log(await which('git'))
