@@ -23,17 +23,24 @@ async function run(): Promise<void> {
 
     // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
     console.log(process.env)
-    const wrapperDir = `${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`
 
-    await exec(`ls ${wrapperDir}`)
+    await exec(`ls ${process.env.RUNNER_WORKSPACE}`)
 
     console.log(await which('git'))
-    await exec('npm', ['install'], {cwd: wrapperDir})
+    await exec('npm', ['install'], {cwd: process.env.RUNNER_WORKSPACE})
 
     if (process.env.GITHUB_WORKSPACE) {
-      await mv(`${process.env.GITHUB_WORKSPACE}/src`, `${wrapperDir}/src/`)
-      await mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, wrapperDir)
-      await exec('npm', ['run', 'build-icons'], {cwd: wrapperDir})
+      await mv(
+        `${process.env.GITHUB_WORKSPACE}/src`,
+        `${process.env.RUNNER_WORKSPACE}/src/`
+      )
+      await mv(
+        `${process.env.GITHUB_WORKSPACE}/icon.png`,
+        process.env.RUNNER_WORKSPACE as string
+      )
+      await exec('npm', ['run', 'build-icons'], {
+        cwd: process.env.RUNNER_WORKSPACE
+      })
     }
     // - name: Add MacOS certs
     //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
@@ -59,7 +66,7 @@ async function run(): Promise<void> {
     //     fileName: 'win-certificate.pfx'
     //     encodedString: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
-    await exec('npm', ['run', 'make'], {cwd: wrapperDir})
+    await exec('npm', ['run', 'make'], {cwd: process.env.RUNNER_WORKSPACE})
     // TODO: make sure the right stuff is in ENV
     // 1. How to thread through APP_NAME
     // 2. Deal with codesigning stuff later
