@@ -113,8 +113,8 @@ function run() {
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
             // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
             console.log(process.env);
-            const wrapperDir = `${process.env.HOME || process.env.HOME_PATH}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`;
-            yield exec_1.exec(`ls ${process.env.HOME_PATH || process.env.HOME}`);
+            const wrapperDir = `${process.env.HOME || process.env.HOMEPATH}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`;
+            yield exec_1.exec(`ls ${process.env.HOMEPATH || process.env.HOME}`);
             yield exec_1.exec(`ls ${wrapperDir}`);
             console.log(yield io_1.which('git'));
             yield exec_1.exec('npm', ['install'], { cwd: wrapperDir });
