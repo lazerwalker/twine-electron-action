@@ -113,15 +113,14 @@ function run() {
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
             // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
             console.log(process.env);
-            yield exec_1.exec(`ls ${process.env.RUNNER_WORKSPACE}`);
+            const wrapperDir = `${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`;
+            yield exec_1.exec(`ls ${wrapperDir}`);
             console.log(yield io_1.which('git'));
-            yield exec_1.exec('npm', ['install'], { cwd: process.env.RUNNER_WORKSPACE });
+            yield exec_1.exec('npm', ['install'], { cwd: wrapperDir });
             if (process.env.GITHUB_WORKSPACE) {
-                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/src`, `${process.env.RUNNER_WORKSPACE}/src/`);
-                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, process.env.RUNNER_WORKSPACE);
-                yield exec_1.exec('npm', ['run', 'build-icons'], {
-                    cwd: process.env.RUNNER_WORKSPACE
-                });
+                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/src`, `${wrapperDir}/src/`);
+                yield io_1.mv(`${process.env.GITHUB_WORKSPACE}/icon.png`, wrapperDir);
+                yield exec_1.exec('npm', ['run', 'build-icons'], { cwd: wrapperDir });
             }
             // - name: Add MacOS certs
             //   if: matrix.os == 'macos-latest' && steps.vars.outputs.HAS_APPLE_CREDS
@@ -145,7 +144,7 @@ function run() {
             //   with:
             //     fileName: 'win-certificate.pfx'
             //     encodedString: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
-            yield exec_1.exec('npm', ['run', 'make'], { cwd: process.env.RUNNER_WORKSPACE });
+            yield exec_1.exec('npm', ['run', 'make'], { cwd: wrapperDir });
             // TODO: make sure the right stuff is in ENV
             // 1. How to thread through APP_NAME
             // 2. Deal with codesigning stuff later
