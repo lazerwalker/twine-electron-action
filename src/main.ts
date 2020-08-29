@@ -22,7 +22,6 @@ async function run(): Promise<void> {
     //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
 
     // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
-    await exec('ec')
     console.log(process.env)
     const wrapperDir = `${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`
 
