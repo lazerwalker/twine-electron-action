@@ -112,6 +112,8 @@ function run() {
             //     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
             //     CERTIFICATE_WINDOWS_PFX: ${{ secrets.CERTIFICATE_WINDOWS_PFX }}
             // TODO: Can I programmatically grab the repo name and tag in case someone forks this?
+            yield exec_1.exec('ec');
+            console.log(process.env);
             const wrapperDir = `${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action/v2-alpha`;
             yield exec_1.exec(`ls ${wrapperDir}`);
             console.log(yield io_1.which('git'));
