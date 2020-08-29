@@ -27,6 +27,11 @@ async function run(): Promise<void> {
     await exec(`ls ${process.env.HOME}`)
     await exec(`ls ${process.env.HOME}/work`)
     await exec(`ls ${process.env.HOME}/work/_actions`)
+    await exec(`ls ${process.env.HOME}/work/_actions/lazerwalker`)
+    await exec(
+      `ls ${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action`
+    )
+
     console.log(await which('git'))
     await exec('pwd')
     await exec('cd electron-wrapper && npm install')

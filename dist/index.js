@@ -116,6 +116,8 @@ function run() {
             yield exec_1.exec(`ls ${process.env.HOME}`);
             yield exec_1.exec(`ls ${process.env.HOME}/work`);
             yield exec_1.exec(`ls ${process.env.HOME}/work/_actions`);
+            yield exec_1.exec(`ls ${process.env.HOME}/work/_actions/lazerwalker`);
+            yield exec_1.exec(`ls ${process.env.HOME}/work/_actions/lazerwalker/twine-electron-action`);
             console.log(yield io_1.which('git'));
             yield exec_1.exec('pwd');
             yield exec_1.exec('cd electron-wrapper && npm install');
